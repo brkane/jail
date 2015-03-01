@@ -7,4 +7,18 @@
 # All rights reserved - Do Not Redistribute
 #
 
+append_if_no_line "create loopback interface for jails" do
+  path "/etc/rc.conf"
+  line "cloned_interfaces=\"${cloned_interfaces} lo1\""
+end
+
 package "ezjail"
+
+append_if_no_line "enable ezjail on boot" do
+  path "/etc/rc.conf"
+  line "ezjail_enable=\"YES\""
+end
+
+service "ezjail" do
+  action :start
+end
