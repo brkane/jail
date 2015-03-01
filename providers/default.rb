@@ -12,8 +12,15 @@ action :create do
     cmdStr = "ezjail-admin create #{@new_resource.name} '#{@new_resource.interface}|#{@new_resource.ipaddress}'"
     execute cmdStr do
       Chef::Log.debug "ezjail-admin_create: #{cmdStr}"
-      environment "PATH" => "/usr/local/bin"
+      environment "PATH" => "/bin:/usr/bin:/usr/local/bin"
       new_resource.updated_by_last_action(true)
+    end
+    interface_name = @new_resource.interface
+    ip_address = @new_resource.ipaddress
+    replace_or_add "interface alias" do
+      path '/etc/rc.conf'
+      pattern "ifconfig_#{interface_name}_aliases=\".*"
+      line "ifconfig_#{interface_name}_aliases=\"inet #{ip_address} netmask=0xffffffff\""
     end
   end
 end
