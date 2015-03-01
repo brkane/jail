@@ -12,7 +12,7 @@ append_if_no_line "create loopback interface for jails" do
   line "cloned_interfaces=\"${cloned_interfaces} lo1\""
 end
 
-package "ezjail"
+freebsd_package "ezjail"
 
 append_if_no_line "enable ezjail on boot" do
   path "/etc/rc.conf"

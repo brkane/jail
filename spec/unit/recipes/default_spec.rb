@@ -17,4 +17,8 @@ describe 'jail::default' do
     cloned_interface_string = 'cloned_interfaces="${cloned_interfaces} lo1"'
     expect(chef_run).to append_if_no_line('/etc/rc.conf', cloned_interface_string)
   end
+
+  it 'installs ezjail port' do
+    expect(chef_run).to install_freebsd_package('ezjail')
+  end
 end
