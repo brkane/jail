@@ -21,4 +21,17 @@ describe 'jail::default' do
   it 'installs ezjail port' do
     expect(chef_run).to install_freebsd_package('ezjail')
   end
+
+  it 'adds ezjail enable to rc.conf' do
+    ezjail_enable_string = 'ezjail_enable="YES"'
+    expect(chef_run).to append_if_no_line('/etc/rc.conf', ezjail_enable_string)
+  end
+
+  it 'starts the ezjail service' do
+    expect(chef_run).to start_service('ezjail')
+  end
+
+  it 'sets up the base jail with ports' do
+    expect(chef_run).to run_execute('setup base jail').with(command: 'ezjail-admin install -p')
+  end
 end
