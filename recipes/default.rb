@@ -22,3 +22,9 @@ end
 service "ezjail" do
   action :start
 end
+
+execute "setup base jail" do
+  command "ezjail-admin install -p"
+  creates "/usr/jails/basejail"
+  environment "PATH" => "/usr/local/bin:#{ENV["PATH"]}"
+end
