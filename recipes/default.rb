@@ -24,7 +24,7 @@ service "ezjail" do
 end
 
 execute "setup base jail" do
-  command "ezjail-admin install -p"
+  command "ezjail-admin install"
   creates "/usr/jails/basejail"
   environment "PATH" => "/usr/local/bin:#{ENV["PATH"]}"
 end
