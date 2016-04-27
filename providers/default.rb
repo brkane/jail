@@ -12,7 +12,7 @@ action :create do
     cmdStr = "ezjail-admin create #{@new_resource.name} '#{@new_resource.interface}|#{@new_resource.ipaddress}'"
     execute cmdStr do
       Chef::Log.debug "ezjail-admin_create: #{cmdStr}"
-      environment "PATH" => "/bin:/usr/bin:/usr/local/bin"
+      environment "PATH" => "/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
       new_resource.updated_by_last_action(true)
     end
     interface_name = @new_resource.interface
