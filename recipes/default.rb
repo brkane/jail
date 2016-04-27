@@ -19,10 +19,6 @@ append_if_no_line "enable ezjail on boot" do
   line "ezjail_enable=\"YES\""
 end
 
-service "ezjail" do
-  action :start
-end
-
 execute "setup base jail" do
   command "ezjail-admin install"
   creates "/usr/jails/basejail"
