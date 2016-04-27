@@ -28,3 +28,8 @@ execute "setup base jail" do
   creates "/usr/jails/basejail"
   environment "PATH" => "/usr/local/bin:#{ENV["PATH"]}"
 end
+
+execute 'create lo1 interface' do
+  command 'service netif cloneup'
+  environment 'PATH' => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin'
+end
