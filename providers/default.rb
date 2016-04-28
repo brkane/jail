@@ -15,13 +15,6 @@ action :create do
       environment "PATH" => "/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
       new_resource.updated_by_last_action(true)
     end
-    interface_name = @new_resource.interface
-    ip_address = @new_resource.ipaddress
-    replace_or_add "interface alias" do
-      path '/etc/rc.conf'
-      pattern "ifconfig_#{interface_name}_aliases=\".*"
-      line "ifconfig_#{interface_name}_aliases=\"inet #{ip_address} netmask=0xffffffff\""
-    end
   end
 end
 
