@@ -6,7 +6,7 @@ end
 use_inline_resources
 
 action :create do
-  if jail_exists? new_resource.name
+  if jail_exists?
     Chef::Log.info "#{ @new_resource } already exists - nothing to do."
   else
     cmdStr = "ezjail-admin create #{@new_resource.name} '#{@new_resource.interface}|#{@new_resource.ipaddress}'"
@@ -34,19 +34,8 @@ action :start do
   end
 end
 
-def jail_exists?(name)
-  cmdStr = "ezjail-admin list | grep '^#{name}\\b'"
-  cmd = Mixlib::ShellOut.new(cmdStr)
-  cmd.environment['PATH'] = ENV.fetch('PATH', '/usr/local/bin')
-  cmd.run_command
-  Chef::Log.debug "jail_exists?: #{cmdStr}"
-  Chef::Log.debug "jail_exists?: #{cmd.stdout}"
-  begin
-    cmd.error!
-    true
-  rescue
-    false
-  end
+def jail_exists?
+  ::File.exist?("/usr/local/etc/ezjail/#{@new_resource.name}")
 end
 
 def jail_running?
