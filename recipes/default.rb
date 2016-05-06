@@ -19,7 +19,7 @@ service 'ezjail' do
 end
 
 execute "setup base jail" do
-  command "ezjail-admin install"
+  command "ezjail-admin install #{node['jail']['install_args']}"
   creates "/usr/jails/basejail"
   environment "PATH" => "/usr/local/bin:#{ENV["PATH"]}"
 end
